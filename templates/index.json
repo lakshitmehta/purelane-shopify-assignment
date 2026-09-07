@@ -5,10 +5,14 @@
     },
     "purelane_product_grid": {
       "type": "purelane-product-grid"
+    },
+    "purelane_combos": {
+      "type": "purelane-combos"
     }
   },
   "order": [
     "purelane_hero",
-    "purelane_product_grid"
+    "purelane_product_grid",
+    "purelane_combos"
   ]
 }
