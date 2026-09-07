@@ -8,11 +8,15 @@
     },
     "purelane_combos": {
       "type": "purelane-combos"
+    },
+    "purelane_bundles": {
+      "type": "purelane-bundles"
     }
   },
   "order": [
     "purelane_hero",
     "purelane_product_grid",
-    "purelane_combos"
+    "purelane_combos",
+    "purelane_bundles"
   ]
 }
