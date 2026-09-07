@@ -1,0 +1,109 @@
+{% doc %}
+  Purelane reusable product card.
+
+  @param {object} product - Shopify product object
+  @param {boolean} [show_vendor] - Whether to display the vendor
+{% enddoc %}
+
+<article class="purelane-product-card">
+  <div class="purelane-product-card__media">
+    <a
+      href="{{ product.url }}"
+      class="purelane-product-card__media-link"
+      aria-label="{{ product.title | escape }}"
+    >
+      {% if product.featured_image != blank %}
+        {{
+          product.featured_image
+          | image_url: width: 700
+          | image_tag:
+            loading: 'lazy',
+            widths: '280, 420, 560, 700',
+            sizes: '(min-width: 990px) 25vw, (min-width: 750px) 33vw, 50vw',
+            alt: product.featured_image.alt | default: product.title
+        }}
+      {% else %}
+        <div class="purelane-product-card__placeholder">
+          {{ 'product-1' | placeholder_svg_tag: 'purelane-product-card__placeholder-svg' }}
+        </div>
+      {% endif %}
+    </a>
+
+    {% if product.available == false %}
+      <span class="purelane-product-card__badge">
+        Sold out
+      </span>
+    {% elsif product.compare_at_price > product.price %}
+      {% assign savings = product.compare_at_price | minus: product.price %}
+      {% assign discount = savings | times: 100 | divided_by: product.compare_at_price %}
+
+      <span class="purelane-product-card__badge">
+        {{ discount }}% off
+      </span>
+    {% endif %}
+  </div>
+
+  <div class="purelane-product-card__content">
+    {% if show_vendor and product.vendor != blank %}
+      <p class="purelane-product-card__vendor">
+        {{ product.vendor | escape }}
+      </p>
+    {% endif %}
+
+    <h3 class="purelane-product-card__title">
+      <a href="{{ product.url }}">
+        {{ product.title | escape }}
+      </a>
+    </h3>
+
+    <div class="purelane-product-card__rating" aria-label="Product rating">
+      <span aria-hidden="true">★★★★★</span>
+      <span class="purelane-product-card__rating-text">
+        4.8
+      </span>
+    </div>
+
+    <div class="purelane-product-card__pricing">
+      <span class="purelane-product-card__price">
+        {{ product.price | money }}
+      </span>
+
+      {% if product.compare_at_price > product.price %}
+        <s class="purelane-product-card__compare">
+          {{ product.compare_at_price | money }}
+        </s>
+      {% endif %}
+    </div>
+
+    {% if product.available %}
+      {% assign current_variant = product.selected_or_first_available_variant %}
+
+      {% form 'product',
+        product,
+        class: 'purelane-product-card__form'
+      %}
+        <input
+          type="hidden"
+          name="id"
+          value="{{ current_variant.id }}"
+        >
+
+        <button
+          type="submit"
+          class="purelane-product-card__button"
+          {% unless current_variant.available %}disabled{% endunless %}
+        >
+          Add to cart
+        </button>
+      {% endform %}
+    {% else %}
+      <button
+        type="button"
+        class="purelane-product-card__button"
+        disabled
+      >
+        Sold out
+      </button>
+    {% endif %}
+  </div>
+</article>

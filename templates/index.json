@@ -2,9 +2,13 @@
   "sections": {
     "purelane_hero": {
       "type": "purelane-hero"
+    },
+    "purelane_product_grid": {
+      "type": "purelane-product-grid"
     }
   },
   "order": [
-    "purelane_hero"
+    "purelane_hero",
+    "purelane_product_grid"
   ]
 }
