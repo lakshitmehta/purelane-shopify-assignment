@@ -11,12 +11,16 @@
     },
     "purelane_bundles": {
       "type": "purelane-bundles"
+    },
+    "purelane_reviews": {
+      "type": "purelane-reviews"
     }
   },
   "order": [
     "purelane_hero",
     "purelane_product_grid",
     "purelane_combos",
-    "purelane_bundles"
+    "purelane_bundles",
+    "purelane_reviews"
   ]
 }
